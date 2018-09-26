@@ -1,0 +1,1284 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Arkivadapter"
+host: "arkivadapter.ad.forskningsradet.no:6080"
+schemes:
+- "https"
+paths:
+  /v1/kategorikodebeskrivelser:
+    get:
+      summary: "Hent beskrivelser av dokumentkategorikoder hentet fra WebSak."
+      description: ""
+      operationId: "hentDokumentkategorikodeBeskrivelser"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "string"
+  /v1/{prosjektnr}/dokumenter:
+    get:
+      summary: "Hent dokumenter gitt liste av dokument-ID-er, evt. filtrert på dokumentkategorikoder\
+        \ og journalpostmerknad. Nyeste versjon av dokumentet returneres."
+      description: ""
+      operationId: "hentDokumenter"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "dokumentId"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+        collectionFormat: "multi"
+      - name: "dokumentfilId"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+        collectionFormat: "multi"
+      - name: "kategori"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "AKTSAMPAR"
+          - "ANBINV"
+          - "ANMREVSOK"
+          - "ANNDOKIN"
+          - "ANNDOKUT"
+          - "ANNKONTIN"
+          - "ANNKONTUT"
+          - "ANNRAPPIN"
+          - "ANNRAPPUT"
+          - "ANNSAKSIN"
+          - "ANNSAKSUT"
+          - "AVKATEGOR"
+          - "AVSLAG"
+          - "AVVIST"
+          - "BEDRERK"
+          - "BEDROPLYS"
+          - "BESTForInf"
+          - "BEVILGN"
+          - "BLANK"
+          - "BREVINN"
+          - "BREVUT"
+          - "CV"
+          - "DATAHAND"
+          - "DATAPLAN"
+          - "DOKUMENT"
+          - "EKSPVURD"
+          - "EPOSTINN"
+          - "EPOSTUT"
+          - "FORFAGEKS"
+          - "KARSAMDRAG"
+          - "KARUTSKR"
+          - "KONTRAKT"
+          - "KONTRAKTUT"
+          - "KONTRDOK"
+          - "KONTRENDR"
+          - "KONTRENDUT"
+          - "MIDLANNET"
+          - "MIDLBEDRO"
+          - "MIDLPROSJB"
+          - "ORGEKSPVUR"
+          - "OVERFOR"
+          - "PANELVURD"
+          - "PROSJBESK"
+          - "RAPAVVIS"
+          - "RAPPANN"
+          - "RAPPDOK"
+          - "RAPPFRAM"
+          - "RAPPFRVL"
+          - "RAPPGOD"
+          - "RAPPREGN"
+          - "RAPPRES"
+          - "RAPPSLFVL"
+          - "RAPPSLPO"
+          - "RAPPSLUT"
+          - "RAPPSLVL"
+          - "RAPPUBL"
+          - "RAPPURR"
+          - "RAPPVEDL"
+          - "RAPTRUKK"
+          - "SAKSBEHDOK"
+          - "SAMAVTALE"
+          - "SIGNPANELV"
+          - "SOKANNET"
+          - "SOKINST"
+          - "SOKNAD"
+          - "TILBUD"
+          - "TILBUDSVAR"
+          - "TILSAGN"
+          - "TRUKKET"
+          - "UKATEGOR"
+          - "VEDTAK"
+          - "VEILEDATT"
+          - "XSOKBOK"
+          - "XVRDBOK"
+          - "ZAVSLAG"
+          - "KONTRAKTINN"
+          - "RAPUNDKJ"
+          - "KIKKEAKS"
+          - "KFAKS"
+          - "KEAKS"
+          - "KAKS"
+          - "KFTILAKS"
+          - "KETILAKS"
+          - "KTILAKS"
+          - "STBVEDTAK"
+          - "STBVREVI"
+          - "STBENDRING"
+        collectionFormat: "multi"
+      - name: "merknadstype"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "merknadstekst"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DokumentDto"
+  /v1/{prosjektnr}/{journalpostId}/dokumenter:
+    get:
+      operationId: "hentGittJournalpostId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "journalpostId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "kategori"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "AKTSAMPAR"
+          - "ANBINV"
+          - "ANMREVSOK"
+          - "ANNDOKIN"
+          - "ANNDOKUT"
+          - "ANNKONTIN"
+          - "ANNKONTUT"
+          - "ANNRAPPIN"
+          - "ANNRAPPUT"
+          - "ANNSAKSIN"
+          - "ANNSAKSUT"
+          - "AVKATEGOR"
+          - "AVSLAG"
+          - "AVVIST"
+          - "BEDRERK"
+          - "BEDROPLYS"
+          - "BESTForInf"
+          - "BEVILGN"
+          - "BLANK"
+          - "BREVINN"
+          - "BREVUT"
+          - "CV"
+          - "DATAHAND"
+          - "DATAPLAN"
+          - "DOKUMENT"
+          - "EKSPVURD"
+          - "EPOSTINN"
+          - "EPOSTUT"
+          - "FORFAGEKS"
+          - "KARSAMDRAG"
+          - "KARUTSKR"
+          - "KONTRAKT"
+          - "KONTRAKTUT"
+          - "KONTRDOK"
+          - "KONTRENDR"
+          - "KONTRENDUT"
+          - "MIDLANNET"
+          - "MIDLBEDRO"
+          - "MIDLPROSJB"
+          - "ORGEKSPVUR"
+          - "OVERFOR"
+          - "PANELVURD"
+          - "PROSJBESK"
+          - "RAPAVVIS"
+          - "RAPPANN"
+          - "RAPPDOK"
+          - "RAPPFRAM"
+          - "RAPPFRVL"
+          - "RAPPGOD"
+          - "RAPPREGN"
+          - "RAPPRES"
+          - "RAPPSLFVL"
+          - "RAPPSLPO"
+          - "RAPPSLUT"
+          - "RAPPSLVL"
+          - "RAPPUBL"
+          - "RAPPURR"
+          - "RAPPVEDL"
+          - "RAPTRUKK"
+          - "SAKSBEHDOK"
+          - "SAMAVTALE"
+          - "SIGNPANELV"
+          - "SOKANNET"
+          - "SOKINST"
+          - "SOKNAD"
+          - "TILBUD"
+          - "TILBUDSVAR"
+          - "TILSAGN"
+          - "TRUKKET"
+          - "UKATEGOR"
+          - "VEDTAK"
+          - "VEILEDATT"
+          - "XSOKBOK"
+          - "XVRDBOK"
+          - "ZAVSLAG"
+          - "KONTRAKTINN"
+          - "RAPUNDKJ"
+          - "KIKKEAKS"
+          - "KFAKS"
+          - "KEAKS"
+          - "KAKS"
+          - "KFTILAKS"
+          - "KETILAKS"
+          - "KTILAKS"
+          - "STBVEDTAK"
+          - "STBVREVI"
+          - "STBENDRING"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DokumentDto"
+          headers: {}
+  /v1/{prosjektnr}/journalpost:
+    post:
+      operationId: "arkiverDokumenter"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/OpprettJournalpostDto"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ArkiveringsResponsDto"
+          headers: {}
+  /v1/{prosjektnr}:
+    get:
+      summary: "Hent sak med eller uten dokumenter gitt prosjektnummer. Dersom kallet\
+        \ skal returnere dokumenter er det mulig å filtrere på listen av returnerte\
+        \ dokumenter på dokumentkategorier."
+      description: ""
+      operationId: "hentProsjektinformasjon"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-example: 240000
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: true
+        type: "string"
+        x-example: "nar"
+      - name: "dokumentInklusjon"
+        in: "query"
+        required: false
+        type: "string"
+        x-example: "UTEN_DOKUMENTERS_FILER"
+        enum:
+        - "UTEN_JOURNALPOSTER"
+        - "UTEN_DOKUMENTERS_FILER"
+        - "MED_DOKUMENTERS_FILER"
+      - name: "kategori"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "AKTSAMPAR"
+          - "ANBINV"
+          - "ANMREVSOK"
+          - "ANNDOKIN"
+          - "ANNDOKUT"
+          - "ANNKONTIN"
+          - "ANNKONTUT"
+          - "ANNRAPPIN"
+          - "ANNRAPPUT"
+          - "ANNSAKSIN"
+          - "ANNSAKSUT"
+          - "AVKATEGOR"
+          - "AVSLAG"
+          - "AVVIST"
+          - "BEDRERK"
+          - "BEDROPLYS"
+          - "BESTForInf"
+          - "BEVILGN"
+          - "BLANK"
+          - "BREVINN"
+          - "BREVUT"
+          - "CV"
+          - "DATAHAND"
+          - "DATAPLAN"
+          - "DOKUMENT"
+          - "EKSPVURD"
+          - "EPOSTINN"
+          - "EPOSTUT"
+          - "FORFAGEKS"
+          - "KARSAMDRAG"
+          - "KARUTSKR"
+          - "KONTRAKT"
+          - "KONTRAKTUT"
+          - "KONTRDOK"
+          - "KONTRENDR"
+          - "KONTRENDUT"
+          - "MIDLANNET"
+          - "MIDLBEDRO"
+          - "MIDLPROSJB"
+          - "ORGEKSPVUR"
+          - "OVERFOR"
+          - "PANELVURD"
+          - "PROSJBESK"
+          - "RAPAVVIS"
+          - "RAPPANN"
+          - "RAPPDOK"
+          - "RAPPFRAM"
+          - "RAPPFRVL"
+          - "RAPPGOD"
+          - "RAPPREGN"
+          - "RAPPRES"
+          - "RAPPSLFVL"
+          - "RAPPSLPO"
+          - "RAPPSLUT"
+          - "RAPPSLVL"
+          - "RAPPUBL"
+          - "RAPPURR"
+          - "RAPPVEDL"
+          - "RAPTRUKK"
+          - "SAKSBEHDOK"
+          - "SAMAVTALE"
+          - "SIGNPANELV"
+          - "SOKANNET"
+          - "SOKINST"
+          - "SOKNAD"
+          - "TILBUD"
+          - "TILBUDSVAR"
+          - "TILSAGN"
+          - "TRUKKET"
+          - "UKATEGOR"
+          - "VEDTAK"
+          - "VEILEDATT"
+          - "XSOKBOK"
+          - "XVRDBOK"
+          - "ZAVSLAG"
+          - "KONTRAKTINN"
+          - "RAPUNDKJ"
+          - "KIKKEAKS"
+          - "KFAKS"
+          - "KEAKS"
+          - "KAKS"
+          - "KFTILAKS"
+          - "KETILAKS"
+          - "KTILAKS"
+          - "STBVEDTAK"
+          - "STBVREVI"
+          - "STBENDRING"
+        collectionFormat: "multi"
+        x-example: "CV"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SakDto"
+    post:
+      summary: "Oppretter sak for prosjekt"
+      description: ""
+      operationId: "opprettSak"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/OpprettSakDto"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ResponsDto"
+    put:
+      summary: "Oppdater metadata på sak for gitt prosjektnr."
+      description: ""
+      operationId: "oppdaterMetadata"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/SakMetadataDto"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            enum:
+            - "OK"
+            - "FEILTILSTAND"
+            - "REGISTRERT"
+            - "FEILET_VALIDERING"
+  /v1/{prosjektnr}/harSak:
+    get:
+      summary: "Sjekk om det finnes en sak for gitt prosjektnr."
+      description: ""
+      operationId: "harSak"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "prosjektnr"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ProsjektHarSakDto"
+  /system:
+    get:
+      operationId: "index"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+          headers: {}
+  /system/health:
+    get:
+      operationId: "status"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StatusDto"
+          headers: {}
+  /system/prometheus:
+    get:
+      operationId: "test"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+          headers: {}
+  /v1/brukere:
+    get:
+      summary: "Hent liste over alle brukere i WebSak."
+      description: ""
+      operationId: "hentAlleWebSakBrukere"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "utforendeBrukernavn"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/WebSakBruker"
+definitions:
+  DokumentDto:
+    type: "object"
+    properties:
+      dokumentkategori:
+        $ref: "#/definitions/DokumentkategoriDto"
+      id:
+        type: "integer"
+        format: "int32"
+      dokumentfil:
+        $ref: "#/definitions/DokumentfilDto"
+  DokumentfilDto:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      beskrivelse:
+        type: "string"
+      filnavn:
+        type: "string"
+      variantkode:
+        type: "string"
+      dokDato:
+        type: "string"
+        format: "date-time"
+      fil:
+        type: "string"
+        format: "byte"
+      checksum:
+        type: "string"
+      checksumAlgoritme:
+        type: "string"
+      filtype:
+        type: "string"
+      kode:
+        type: "string"
+      erArkivverdig:
+        type: "boolean"
+  DokumentkategoriDto:
+    type: "object"
+    required:
+    - "dokumentkategorikode"
+    - "kategoribeskrivelse"
+    - "webSakKode"
+    properties:
+      dokumentkategorikode:
+        type: "string"
+        enum:
+        - "AKTSAMPAR"
+        - "ANBINV"
+        - "ANMREVSOK"
+        - "ANNDOKIN"
+        - "ANNDOKUT"
+        - "ANNKONTIN"
+        - "ANNKONTUT"
+        - "ANNRAPPIN"
+        - "ANNRAPPUT"
+        - "ANNSAKSIN"
+        - "ANNSAKSUT"
+        - "AVKATEGOR"
+        - "AVSLAG"
+        - "AVVIST"
+        - "BEDRERK"
+        - "BEDROPLYS"
+        - "BESTForInf"
+        - "BEVILGN"
+        - "BLANK"
+        - "BREVINN"
+        - "BREVUT"
+        - "CV"
+        - "DATAHAND"
+        - "DATAPLAN"
+        - "DOKUMENT"
+        - "EKSPVURD"
+        - "EPOSTINN"
+        - "EPOSTUT"
+        - "FORFAGEKS"
+        - "KARSAMDRAG"
+        - "KARUTSKR"
+        - "KONTRAKT"
+        - "KONTRAKTUT"
+        - "KONTRDOK"
+        - "KONTRENDR"
+        - "KONTRENDUT"
+        - "MIDLANNET"
+        - "MIDLBEDRO"
+        - "MIDLPROSJB"
+        - "ORGEKSPVUR"
+        - "OVERFOR"
+        - "PANELVURD"
+        - "PROSJBESK"
+        - "RAPAVVIS"
+        - "RAPPANN"
+        - "RAPPDOK"
+        - "RAPPFRAM"
+        - "RAPPFRVL"
+        - "RAPPGOD"
+        - "RAPPREGN"
+        - "RAPPRES"
+        - "RAPPSLFVL"
+        - "RAPPSLPO"
+        - "RAPPSLUT"
+        - "RAPPSLVL"
+        - "RAPPUBL"
+        - "RAPPURR"
+        - "RAPPVEDL"
+        - "RAPTRUKK"
+        - "SAKSBEHDOK"
+        - "SAMAVTALE"
+        - "SIGNPANELV"
+        - "SOKANNET"
+        - "SOKINST"
+        - "SOKNAD"
+        - "TILBUD"
+        - "TILBUDSVAR"
+        - "TILSAGN"
+        - "TRUKKET"
+        - "UKATEGOR"
+        - "VEDTAK"
+        - "VEILEDATT"
+        - "XSOKBOK"
+        - "XVRDBOK"
+        - "ZAVSLAG"
+        - "KONTRAKTINN"
+        - "RAPUNDKJ"
+        - "KIKKEAKS"
+        - "KFAKS"
+        - "KEAKS"
+        - "KAKS"
+        - "KFTILAKS"
+        - "KETILAKS"
+        - "KTILAKS"
+        - "STBVEDTAK"
+        - "STBVREVI"
+        - "STBENDRING"
+      webSakKode:
+        type: "string"
+      kategoribeskrivelse:
+        type: "string"
+      dokumentkategoritype:
+        type: "string"
+  ArkiveringsResponsDto:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        enum:
+        - "OK"
+        - "FEILTILSTAND"
+        - "REGISTRERT"
+        - "FEILET_VALIDERING"
+      melding:
+        type: "string"
+      unikJournalpostId:
+        type: "string"
+  DokumentidentifikasjonDto:
+    type: "object"
+    properties:
+      webSakId:
+        type: "integer"
+        format: "int32"
+      dokumentkategorikode:
+        type: "string"
+        enum:
+        - "AKTSAMPAR"
+        - "ANBINV"
+        - "ANMREVSOK"
+        - "ANNDOKIN"
+        - "ANNDOKUT"
+        - "ANNKONTIN"
+        - "ANNKONTUT"
+        - "ANNRAPPIN"
+        - "ANNRAPPUT"
+        - "ANNSAKSIN"
+        - "ANNSAKSUT"
+        - "AVKATEGOR"
+        - "AVSLAG"
+        - "AVVIST"
+        - "BEDRERK"
+        - "BEDROPLYS"
+        - "BESTForInf"
+        - "BEVILGN"
+        - "BLANK"
+        - "BREVINN"
+        - "BREVUT"
+        - "CV"
+        - "DATAHAND"
+        - "DATAPLAN"
+        - "DOKUMENT"
+        - "EKSPVURD"
+        - "EPOSTINN"
+        - "EPOSTUT"
+        - "FORFAGEKS"
+        - "KARSAMDRAG"
+        - "KARUTSKR"
+        - "KONTRAKT"
+        - "KONTRAKTUT"
+        - "KONTRDOK"
+        - "KONTRENDR"
+        - "KONTRENDUT"
+        - "MIDLANNET"
+        - "MIDLBEDRO"
+        - "MIDLPROSJB"
+        - "ORGEKSPVUR"
+        - "OVERFOR"
+        - "PANELVURD"
+        - "PROSJBESK"
+        - "RAPAVVIS"
+        - "RAPPANN"
+        - "RAPPDOK"
+        - "RAPPFRAM"
+        - "RAPPFRVL"
+        - "RAPPGOD"
+        - "RAPPREGN"
+        - "RAPPRES"
+        - "RAPPSLFVL"
+        - "RAPPSLPO"
+        - "RAPPSLUT"
+        - "RAPPSLVL"
+        - "RAPPUBL"
+        - "RAPPURR"
+        - "RAPPVEDL"
+        - "RAPTRUKK"
+        - "SAKSBEHDOK"
+        - "SAMAVTALE"
+        - "SIGNPANELV"
+        - "SOKANNET"
+        - "SOKINST"
+        - "SOKNAD"
+        - "TILBUD"
+        - "TILBUDSVAR"
+        - "TILSAGN"
+        - "TRUKKET"
+        - "UKATEGOR"
+        - "VEDTAK"
+        - "VEILEDATT"
+        - "XSOKBOK"
+        - "XVRDBOK"
+        - "ZAVSLAG"
+        - "KONTRAKTINN"
+        - "RAPUNDKJ"
+        - "KIKKEAKS"
+        - "KFAKS"
+        - "KEAKS"
+        - "KAKS"
+        - "KFTILAKS"
+        - "KETILAKS"
+        - "KTILAKS"
+        - "STBVEDTAK"
+        - "STBVREVI"
+        - "STBENDRING"
+      journalpostWebSakId:
+        type: "integer"
+        format: "int32"
+      merknad:
+        $ref: "#/definitions/MerknadDto"
+  MerknadDto:
+    type: "object"
+    required:
+    - "tekst"
+    - "type"
+    properties:
+      type:
+        type: "string"
+        minLength: 1
+        maxLength: 2147483647
+      tekst:
+        type: "string"
+        minLength: 1
+        maxLength: 2147483647
+  OmkategoriserDokumentDto:
+    type: "object"
+    properties:
+      nyDokumentkategorikode:
+        type: "string"
+        enum:
+        - "AKTSAMPAR"
+        - "ANBINV"
+        - "ANMREVSOK"
+        - "ANNDOKIN"
+        - "ANNDOKUT"
+        - "ANNKONTIN"
+        - "ANNKONTUT"
+        - "ANNRAPPIN"
+        - "ANNRAPPUT"
+        - "ANNSAKSIN"
+        - "ANNSAKSUT"
+        - "AVKATEGOR"
+        - "AVSLAG"
+        - "AVVIST"
+        - "BEDRERK"
+        - "BEDROPLYS"
+        - "BESTForInf"
+        - "BEVILGN"
+        - "BLANK"
+        - "BREVINN"
+        - "BREVUT"
+        - "CV"
+        - "DATAHAND"
+        - "DATAPLAN"
+        - "DOKUMENT"
+        - "EKSPVURD"
+        - "EPOSTINN"
+        - "EPOSTUT"
+        - "FORFAGEKS"
+        - "KARSAMDRAG"
+        - "KARUTSKR"
+        - "KONTRAKT"
+        - "KONTRAKTUT"
+        - "KONTRDOK"
+        - "KONTRENDR"
+        - "KONTRENDUT"
+        - "MIDLANNET"
+        - "MIDLBEDRO"
+        - "MIDLPROSJB"
+        - "ORGEKSPVUR"
+        - "OVERFOR"
+        - "PANELVURD"
+        - "PROSJBESK"
+        - "RAPAVVIS"
+        - "RAPPANN"
+        - "RAPPDOK"
+        - "RAPPFRAM"
+        - "RAPPFRVL"
+        - "RAPPGOD"
+        - "RAPPREGN"
+        - "RAPPRES"
+        - "RAPPSLFVL"
+        - "RAPPSLPO"
+        - "RAPPSLUT"
+        - "RAPPSLVL"
+        - "RAPPUBL"
+        - "RAPPURR"
+        - "RAPPVEDL"
+        - "RAPTRUKK"
+        - "SAKSBEHDOK"
+        - "SAMAVTALE"
+        - "SIGNPANELV"
+        - "SOKANNET"
+        - "SOKINST"
+        - "SOKNAD"
+        - "TILBUD"
+        - "TILBUDSVAR"
+        - "TILSAGN"
+        - "TRUKKET"
+        - "UKATEGOR"
+        - "VEDTAK"
+        - "VEILEDATT"
+        - "XSOKBOK"
+        - "XVRDBOK"
+        - "ZAVSLAG"
+        - "KONTRAKTINN"
+        - "RAPUNDKJ"
+        - "KIKKEAKS"
+        - "KFAKS"
+        - "KEAKS"
+        - "KAKS"
+        - "KFTILAKS"
+        - "KETILAKS"
+        - "KTILAKS"
+        - "STBVEDTAK"
+        - "STBVREVI"
+        - "STBENDRING"
+      dokumentidentifikasjon:
+        $ref: "#/definitions/DokumentidentifikasjonDto"
+  OpprettDokumentDto:
+    type: "object"
+    required:
+    - "dokumentkategorikode"
+    - "fil"
+    - "filnavn"
+    properties:
+      dokumentkategorikode:
+        type: "string"
+        enum:
+        - "AKTSAMPAR"
+        - "ANBINV"
+        - "ANMREVSOK"
+        - "ANNDOKIN"
+        - "ANNDOKUT"
+        - "ANNKONTIN"
+        - "ANNKONTUT"
+        - "ANNRAPPIN"
+        - "ANNRAPPUT"
+        - "ANNSAKSIN"
+        - "ANNSAKSUT"
+        - "AVKATEGOR"
+        - "AVSLAG"
+        - "AVVIST"
+        - "BEDRERK"
+        - "BEDROPLYS"
+        - "BESTForInf"
+        - "BEVILGN"
+        - "BLANK"
+        - "BREVINN"
+        - "BREVUT"
+        - "CV"
+        - "DATAHAND"
+        - "DATAPLAN"
+        - "DOKUMENT"
+        - "EKSPVURD"
+        - "EPOSTINN"
+        - "EPOSTUT"
+        - "FORFAGEKS"
+        - "KARSAMDRAG"
+        - "KARUTSKR"
+        - "KONTRAKT"
+        - "KONTRAKTUT"
+        - "KONTRDOK"
+        - "KONTRENDR"
+        - "KONTRENDUT"
+        - "MIDLANNET"
+        - "MIDLBEDRO"
+        - "MIDLPROSJB"
+        - "ORGEKSPVUR"
+        - "OVERFOR"
+        - "PANELVURD"
+        - "PROSJBESK"
+        - "RAPAVVIS"
+        - "RAPPANN"
+        - "RAPPDOK"
+        - "RAPPFRAM"
+        - "RAPPFRVL"
+        - "RAPPGOD"
+        - "RAPPREGN"
+        - "RAPPRES"
+        - "RAPPSLFVL"
+        - "RAPPSLPO"
+        - "RAPPSLUT"
+        - "RAPPSLVL"
+        - "RAPPUBL"
+        - "RAPPURR"
+        - "RAPPVEDL"
+        - "RAPTRUKK"
+        - "SAKSBEHDOK"
+        - "SAMAVTALE"
+        - "SIGNPANELV"
+        - "SOKANNET"
+        - "SOKINST"
+        - "SOKNAD"
+        - "TILBUD"
+        - "TILBUDSVAR"
+        - "TILSAGN"
+        - "TRUKKET"
+        - "UKATEGOR"
+        - "VEDTAK"
+        - "VEILEDATT"
+        - "XSOKBOK"
+        - "XVRDBOK"
+        - "ZAVSLAG"
+        - "KONTRAKTINN"
+        - "RAPUNDKJ"
+        - "KIKKEAKS"
+        - "KFAKS"
+        - "KEAKS"
+        - "KAKS"
+        - "KFTILAKS"
+        - "KETILAKS"
+        - "KTILAKS"
+        - "STBVEDTAK"
+        - "STBVREVI"
+        - "STBENDRING"
+      filnavn:
+        type: "string"
+        minLength: 1
+        maxLength: 2147483647
+      fil:
+        type: "string"
+        format: "byte"
+      beskrivelse:
+        type: "string"
+      generertId:
+        type: "string"
+  OpprettJournalpostDto:
+    type: "object"
+    required:
+    - "avsenderEllerMottaker"
+    - "avsenderType"
+    - "hoveddokument"
+    - "journalposttype"
+    - "merknader"
+    properties:
+      journalpostBeskrivelse:
+        type: "string"
+      hoveddokument:
+        $ref: "#/definitions/OpprettDokumentDto"
+      vedlegg:
+        type: "array"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/OpprettDokumentDto"
+      journalposttype:
+        type: "string"
+        enum:
+        - "INNKOMMENDE"
+        - "UTGAENDE"
+        - "INTERNT_DOKUMENT_FOR_OPPFOLGING"
+        - "INTERNT_DOKUMENT_UTEN_OPPFOLGING"
+        - "SAKSFRAMLEGG"
+        - "LOGGET_DOKUMENT"
+      avsenderEllerMottaker:
+        type: "string"
+        minLength: 1
+        maxLength: 2147483647
+      avsenderType:
+        type: "string"
+        enum:
+        - "PERSON"
+        - "ORGANISASJON"
+      merknader:
+        type: "array"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/MerknadDto"
+      omkategoriseringsInformasjon:
+        type: "array"
+        items:
+          $ref: "#/definitions/OmkategoriserDokumentDto"
+      brevdato:
+        type: "string"
+        format: "date-time"
+  SakMetadataDto:
+    type: "object"
+    required:
+    - "aktivitet"
+    - "saksbehandler"
+    - "tittel"
+    properties:
+      saksbehandler:
+        type: "string"
+      aktivitet:
+        type: "string"
+      tittel:
+        type: "string"
+      sekretar:
+        type: "string"
+      fase:
+        type: "string"
+        enum:
+        - "MOTTATT"
+        - "VURDERES"
+        - "BEVILGNING"
+        - "AVSLUTTET"
+        - "TRUKKET"
+        - "AVSLAG"
+        - "AVVIST"
+        - "LUKKET"
+  EnumMedWebSakKodeDto:
+    type: "object"
+    properties:
+      kode:
+        type: "object"
+      webSakKode:
+        type: "string"
+  EnumMedWebSakKodeDtoJournalposttypeDto:
+    type: "object"
+    properties:
+      kode:
+        type: "string"
+        enum:
+        - "INNKOMMENDE"
+        - "UTGAENDE"
+        - "INTERNT_DOKUMENT_FOR_OPPFOLGING"
+        - "INTERNT_DOKUMENT_UTEN_OPPFOLGING"
+        - "SAKSFRAMLEGG"
+        - "LOGGET_DOKUMENT"
+      webSakKode:
+        type: "string"
+  JournalpostDto:
+    type: "object"
+    required:
+    - "hoveddokument"
+    properties:
+      webSakId:
+        type: "integer"
+        format: "int32"
+      avsender:
+        type: "string"
+      beskrivelse:
+        type: "string"
+      hoveddokument:
+        $ref: "#/definitions/DokumentDto"
+      vedlegg:
+        type: "array"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/DokumentDto"
+      saksbehandler:
+        type: "string"
+      merknader:
+        type: "array"
+        items:
+          $ref: "#/definitions/MerknadDto"
+      brevdato:
+        type: "string"
+        format: "date-time"
+      korrespondanseretningDto:
+        $ref: "#/definitions/EnumMedWebSakKodeDtoJournalposttypeDto"
+      journalpostTilgangDto:
+        $ref: "#/definitions/JournalpostTilgangDto"
+  JournalpostTilgangDto:
+    type: "object"
+    properties:
+      graderingskode:
+        type: "string"
+      offentlighetsparagraf:
+        type: "string"
+      avskjerming:
+        type: "integer"
+        format: "int32"
+  SakDto:
+    type: "object"
+    properties:
+      delarkiv:
+        type: "string"
+      id:
+        type: "integer"
+        format: "int32"
+      journalposter:
+        type: "array"
+        items:
+          $ref: "#/definitions/JournalpostDto"
+      programaktivitet:
+        type: "string"
+      prosjektnr:
+        type: "integer"
+        format: "int64"
+      saksbehandler:
+        type: "string"
+      sekretar:
+        type: "string"
+      status:
+        type: "string"
+      tittel:
+        type: "string"
+      arkivkode:
+        type: "string"
+  ProsjektHarSakDto:
+    type: "object"
+    properties:
+      prosjektnr:
+        type: "integer"
+        format: "int64"
+      harSak:
+        type: "boolean"
+        readOnly: true
+  ResponsDto:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        enum:
+        - "OK"
+        - "FEILTILSTAND"
+        - "REGISTRERT"
+        - "FEILET_VALIDERING"
+      melding:
+        type: "string"
+  OpprettSakDto:
+    type: "object"
+    required:
+    - "aktivitet"
+    - "saksbehandler"
+    - "sekretar"
+    - "tittel"
+    properties:
+      saksbehandler:
+        type: "string"
+      sekretar:
+        type: "string"
+      aktivitet:
+        type: "string"
+      tittel:
+        type: "string"
+      journalpost:
+        $ref: "#/definitions/OpprettJournalpostDto"
+      returReferanse:
+        type: "string"
+  StatusDto:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        enum:
+        - "UP"
+        - "DOWN"
+        - "UNKNOWN"
+      details:
+        type: "object"
+        additionalProperties:
+          type: "object"
+  WebSakBruker:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      brukernavn:
+        type: "string"
